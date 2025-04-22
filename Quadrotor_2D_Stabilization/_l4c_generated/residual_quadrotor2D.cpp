@@ -1,6 +1,6 @@
 #include <l4casadi.hpp>
 
-L4CasADi l4casadi("/home/yu/Documents/01Projects/MetaResidual/Quadrotor_2D_Stabilization/_l4c_generated", "residual_quadrotor2D", 1, 8, 1, 3, "cpu", true, true, true, false, true, true);
+L4CasADi l4casadi("/home/yu/Documents/01Project/MetaResidual/Quadrotor_2D_Stabilization/_l4c_generated", "residual_quadrotor2D", 1, 8, 1, 3, "cpu", true, true, true, false, true, true);
 
 #ifdef __cplusplus
 extern "C" {

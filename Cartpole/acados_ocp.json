@@ -1,7 +1,7 @@
 {
-    "acados_include_path": "/home/yu/Documents/01Projects/acados/include",
-    "acados_lib_path": "/home/yu/Documents/01Projects/acados/lib",
-    "code_export_directory": "/home/yu/Documents/01Projects/MetaResidual/Cartpole/c_generated_code",
+    "acados_include_path": "/home/yu/Software/acados/include",
+    "acados_lib_path": "/home/yu/Software/acados/lib",
+    "code_export_directory": "/home/yu/Documents/01Project/MetaResidual/Cartpole/c_generated_code",
     "constraints": {
         "C": [],
         "C_e": [],
@@ -376,8 +376,8 @@
         "zu_e": []
     },
     "cython_include_dirs": [
-        "/home/yu/Apps/miniconda3/envs/l4control/lib/python3.10/site-packages/numpy/core/include",
-        "/home/yu/Apps/miniconda3/envs/l4control/include/python3.10"
+        "/home/yu/.local/lib/python3.10/site-packages/numpy/core/include",
+        "/home/yu/anaconda3/envs/l4control/include/python3.10"
     ],
     "dims": {
         "N": 20,
@@ -469,8 +469,8 @@
         "dyn_impl_dae_fun": null,
         "dyn_impl_dae_fun_jac": null,
         "dyn_impl_dae_jac": null,
-        "f_expl_expr": "@1=((U+((0.02178*sq(theta_dot))*sin(theta)))/0.726), @2=(((9.8*sin(theta))-(cos(theta)*@1))/(0.33*(1.33333-((0.066*sq(cos(theta)))/0.726)))), @3=residual_pendulum(vertcat(x, x_dot, theta, theta_dot, U)'){0}', (vertcat(x_dot, (@1-(((0.02178*@2)*cos(theta))/0.726)), theta_dot, @2)+vertcat(0, @3[0], 0, @3[1]))",
-        "f_impl_expr": "@1=((U+((0.02178*sq(theta_dot))*sin(theta)))/0.726), @2=(((9.8*sin(theta))-(cos(theta)*@1))/(0.33*(1.33333-((0.066*sq(cos(theta)))/0.726)))), @3=residual_pendulum(vertcat(x, x_dot, theta, theta_dot, U)'){0}', (xdot-(vertcat(x_dot, (@1-(((0.02178*@2)*cos(theta))/0.726)), theta_dot, @2)+vertcat(0, @3[0], 0, @3[1])))",
+        "f_expl_expr": "@1=((U+((0.028125*sq(theta_dot))*sin(theta)))/0.825), @2=(((9.8*sin(theta))-(cos(theta)*@1))/(0.375*(1.33333-((0.075*sq(cos(theta)))/0.825)))), @3=residual_pendulum(vertcat(x, x_dot, theta, theta_dot, U)'){0}', (vertcat(x_dot, (@1-(((0.028125*@2)*cos(theta))/0.825)), theta_dot, @2)+vertcat(0, @3[0], 0, @3[1]))",
+        "f_impl_expr": "@1=((U+((0.028125*sq(theta_dot))*sin(theta)))/0.825), @2=(((9.8*sin(theta))-(cos(theta)*@1))/(0.375*(1.33333-((0.075*sq(cos(theta)))/0.825)))), @3=residual_pendulum(vertcat(x, x_dot, theta, theta_dot, U)'){0}', (xdot-(vertcat(x_dot, (@1-(((0.028125*@2)*cos(theta))/0.825)), theta_dot, @2)+vertcat(0, @3[0], 0, @3[1])))",
         "gnsf_nontrivial_f_LO": 1,
         "gnsf_purely_linear": 0,
         "name": "cartpole_learned",
@@ -562,7 +562,7 @@
         "integrator_type": "ERK",
         "levenberg_marquardt": 0.0,
         "log_primal_step_norm": false,
-        "model_external_shared_lib_dir": "/home/yu/Documents/01Projects/MetaResidual/Cartpole/_l4c_generated",
+        "model_external_shared_lib_dir": "/home/yu/Documents/01Project/MetaResidual/Cartpole/_l4c_generated",
         "model_external_shared_lib_name": "residual_pendulum",
         "nlp_solver_ext_qp_res": 0,
         "nlp_solver_max_iter": 100,

@@ -347,42 +347,42 @@ for id,seed in enumerate(seedlist):
     print(f'State history shape: {x_history.shape}, Control history shape: {u_history.shape}')
 
     # ------------------------------------------------------------------------------
-    # # Plot
-    # plt.figure(figsize=(15, 10))
+    # Plot
+    plt.figure(figsize=(15, 10))
 
-    # # Plot x position
-    # plt.subplot(3, 1, 1)
-    # plt.plot(t_grid_states, x_history[:, 0], linewidth=2, color='C1', label='x')
-    # plt.plot(t_grid_inputs, x_ref_history, '--', linewidth=2, label='x_ref', color='C0', alpha=0.7)
-    # plt.ylabel('Position [m]')
-    # plt.legend()
-    # plt.grid()
+    # Plot x position
+    plt.subplot(3, 1, 1)
+    plt.plot(t_grid_states, x_history[:, 0], linewidth=2, color='C1', label='x')
+    plt.plot(t_grid_inputs, x_ref_history, '--', linewidth=2, label='x_ref', color='C0', alpha=0.7)
+    plt.ylabel('Position [m]')
+    plt.legend()
+    plt.grid()
 
-    # # Plot theta angle
-    # plt.subplot(3, 1, 2)
-    # plt.plot(t_grid_states, x_history[:, 2], linewidth=2, color='C7', label='theta')
-    # plt.plot(t_grid_inputs, theta_ref_history, '--', linewidth=2, label='theta_ref', color='C0', alpha=0.7)
-    # plt.ylabel('Angle [rad]')
-    # plt.legend()
-    # plt.grid()
+    # Plot theta angle
+    plt.subplot(3, 1, 2)
+    plt.plot(t_grid_states, x_history[:, 2], linewidth=2, color='C7', label='theta')
+    plt.plot(t_grid_inputs, theta_ref_history, '--', linewidth=2, label='theta_ref', color='C0', alpha=0.7)
+    plt.ylabel('Angle [rad]')
+    plt.legend()
+    plt.grid()
 
-    # # Plot control input
-    # plt.subplot(3, 1, 3)
-    # plt.plot(t_grid_inputs, u_history, linewidth=2, label='u')
-    # plt.xlabel('Time [s]')
-    # plt.ylabel('Control [N]')
-    # plt.legend()
-    # plt.grid()
-    # plt.tight_layout()
+    # Plot control input
+    plt.subplot(3, 1, 3)
+    plt.plot(t_grid_inputs, u_history, linewidth=2, label='u')
+    plt.xlabel('Time [s]')
+    plt.ylabel('Control [N]')
+    plt.legend()
+    plt.grid()
+    plt.tight_layout()
 
-    # if SAVE_FLAG:
-    #     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    #     # Save plot
-    #     plot_path = f"results/{timestamp}.png"
-    #     plt.savefig(plot_path, dpi=300)
-    #     print(f"Saved plot to {plot_path}")
+    if SAVE_FLAG:
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        # Save plot
+        plot_path = f"results/{timestamp}.png"
+        plt.savefig(plot_path, dpi=300)
+        print(f"Saved plot to {plot_path}")
 
-    # #plt.show()
+    #plt.show()
 
 
     # ------------------------------------------------------------------------------

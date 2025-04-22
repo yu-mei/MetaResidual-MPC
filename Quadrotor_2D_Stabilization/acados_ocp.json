@@ -1,7 +1,7 @@
 {
-    "acados_include_path": "/home/yu/Documents/01Projects/acados/include",
-    "acados_lib_path": "/home/yu/Documents/01Projects/acados/lib",
-    "code_export_directory": "/home/yu/Documents/01Projects/MetaResidual/Quadrotor_2D_Stabilization/c_generated_code",
+    "acados_include_path": "/home/yu/Software/acados/include",
+    "acados_lib_path": "/home/yu/Software/acados/lib",
+    "code_export_directory": "/home/yu/Documents/01Project/MetaResidual/Quadrotor_2D_Stabilization/c_generated_code",
     "constraints": {
         "C": [],
         "C_e": [],
@@ -635,8 +635,8 @@
         "zu_e": []
     },
     "cython_include_dirs": [
-        "/home/yu/Apps/miniconda3/envs/l4control/lib/python3.10/site-packages/numpy/core/include",
-        "/home/yu/Apps/miniconda3/envs/l4control/include/python3.10"
+        "/home/yu/.local/lib/python3.10/site-packages/numpy/core/include",
+        "/home/yu/anaconda3/envs/l4control/include/python3.10"
     ],
     "dims": {
         "N": 20,
@@ -728,8 +728,8 @@
         "dyn_impl_dae_fun": null,
         "dyn_impl_dae_fun_jac": null,
         "dyn_impl_dae_jac": null,
-        "f_expl_expr": "vertcat(x_dot, ((sin(theta)*(T1+T2))/0.027), z_dot, (((cos(theta)*(T1+T2))/0.027)-9.8), theta_dot, (((0.0397*(T2-T1))/1.4e-05)/1.41421))",
-        "f_impl_expr": "(xdot-vertcat(x_dot, ((sin(theta)*(T1+T2))/0.027), z_dot, (((cos(theta)*(T1+T2))/0.027)-9.8), theta_dot, (((0.0397*(T2-T1))/1.4e-05)/1.41421)))",
+        "f_expl_expr": "vertcat(x_dot, ((sin(theta)*(T1+T2))/0.01782), z_dot, (((cos(theta)*(T1+T2))/0.01782)-9.8), theta_dot, (((0.0397*(T2-T1))/1.12e-05)/1.41421))",
+        "f_impl_expr": "(xdot-vertcat(x_dot, ((sin(theta)*(T1+T2))/0.01782), z_dot, (((cos(theta)*(T1+T2))/0.01782)-9.8), theta_dot, (((0.0397*(T2-T1))/1.12e-05)/1.41421)))",
         "gnsf_nontrivial_f_LO": 1,
         "gnsf_purely_linear": 0,
         "name": "quadrotor2D_learned",
@@ -821,7 +821,7 @@
         "integrator_type": "ERK",
         "levenberg_marquardt": 0.0,
         "log_primal_step_norm": false,
-        "model_external_shared_lib_dir": "/home/yu/Documents/01Projects/MetaResidual/Quadrotor_2D_Stabilization/_l4c_generated",
+        "model_external_shared_lib_dir": "/home/yu/Documents/01Project/MetaResidual/Quadrotor_2D_Stabilization/_l4c_generated",
         "model_external_shared_lib_name": "residual_quadrotor2D",
         "nlp_solver_ext_qp_res": 0,
         "nlp_solver_max_iter": 100,

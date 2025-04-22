@@ -1,6 +1,6 @@
 #include <l4casadi.hpp>
 
-L4CasADi l4casadi("/home/yu/Documents/01Projects/MetaResidual/Cartpole/_l4c_generated", "residual_pendulum", 1, 5, 1, 2, "cpu", true, true, true, false, true, true);
+L4CasADi l4casadi("/home/yu/Documents/01Project/MetaResidual/Cartpole/_l4c_generated", "residual_pendulum", 1, 5, 1, 2, "cpu", true, true, true, false, true, true);
 
 #ifdef __cplusplus
 extern "C" {
