@@ -13,18 +13,17 @@ by **Yu Mei**, **Xinyu Zhou**, **Shuyang Yu**, **Vaibhav Srivastava**, and **Xia
 ## 📑 Table of Contents
 - [Fast Online Adaptive Neural MPC via Meta-Learning](#fast-online-adaptive-neural-mpc-via-meta-learning)
   - [📑 Table of Contents](#-table-of-contents)
-  - [🔥 News](#-news)
   - [🎥 Demonstration Video](#-demonstration-video)
   - [🛠️ Installation Instructions](#️-installation-instructions)
   - [🚀 How to Run](#-how-to-run)
+    - [1. Van-der-Pol Oscillator](#1-van-der-pol-oscillator)
+      - [📌 Example: Run nominal MPC + Meta MLP](#-example-run-nominal-mpc--meta-mlp)
+    - [2. CartPole Environment](#2-cartpole-environment)
+      - [📌 Example: Run Meta-MPC with Online Adaptation](#-example-run-meta-mpc-with-online-adaptation)
+      - [📌 Example: Collect Residual Data for Meta-Training](#-example-collect-residual-data-for-meta-training)
+      - [📌 Example: Train Meta Residual MLP Offline](#-example-train-meta-residual-mlp-offline)
   - [📚 Project Structure](#-project-structure)
   - [📝 Citation](#-citation)
----
-
-## 🔥 News
-- \[2025-04\] Paper "**Fast Online Adaptive Neural MPC via Meta-Learning**" uploaded to [arXiv](https://arxiv.org/abs/2504.16369).
-- \[2025-04\] Code for training, online adaptation, and MPC execution is released.
-
 ---
 
 ## 🎥 Demonstration Video
@@ -41,21 +40,21 @@ Watch our [**YouTube video**](https://www.youtube.com/watch?v=4K2QeBxWcWA) showc
 
 ## 🛠️ Installation Instructions
 
-1. **Clone the repository**
+**1. Clone the repository**
 
    ```bash
    git clone https://github.com/yu-mei/MetaResidual-MPC.git
    cd MetaResidual-MPC
    ```
 
-2. **Create a conda environment**
+**2. Create a conda environment**
 
    ```bash
    conda env create -f environment.yml
    conda activate l4control
    ```
 
-3. **Install `l4casadi`**
+**3. Install `l4casadi`**
 
    Install the latest version using pip with `--no-build-isolation` (GPU/CUDA supported):
 
@@ -65,7 +64,7 @@ Watch our [**YouTube video**](https://www.youtube.com/watch?v=4K2QeBxWcWA) showc
 
    > 🔗 Source: [github.com/Tim-Salzmann/l4casadi](https://github.com/Tim-Salzmann/l4casadi)
 
-4. **Install acados and the acados Python interface**
+**4. Install acados and the acados Python interface**
 
    4.1 Clone and build Acados
 
@@ -75,11 +74,11 @@ Watch our [**YouTube video**](https://www.youtube.com/watch?v=4K2QeBxWcWA) showc
 
    Follow the [Python interface installation guide](https://docs.acados.org/python_interface/index.html).
 
-5. **Install `safe-control-gym`**
+**5. Install `safe-control-gym`**
 
    Follow the [official safe-control-gym installation guide](https://github.com/utiasDSL/safe-control-gym).
 
-6. **Override PyTorch installation**
+**6. Override PyTorch installation**
 
    Due to version conflicts between `l4casadi` and `safe-control-gym`, it is necessary to override PyTorch:
 
@@ -90,7 +89,7 @@ Watch our [**YouTube video**](https://www.youtube.com/watch?v=4K2QeBxWcWA) showc
    > ⚠️ This ensures compatibility with both `l4casadi` and `safe-control-gym`.  
    > 🔧 Make sure your CUDA drivers are compatible with CUDA 12.4.
 
-7. **Fix installation issues (if any)**
+**7. Fix installation issues (if any)**
 
    If you encounter any remaining errors, manually install the missing or incompatible packages.  
    Package versions may vary depending on your system environment.
@@ -98,6 +97,74 @@ Watch our [**YouTube video**](https://www.youtube.com/watch?v=4K2QeBxWcWA) showc
 ---
 
 ## 🚀 How to Run
+
+### 1. Van-der-Pol Oscillator
+We provide several scripts under `VanderPol/` for running different versions of the Van der Pol system using Meta-MPC:
+
+| Script | Description |
+|--------|-------------|
+| `VanderPolSys_sim.py` | Simulates the nominal Van der Pol system. |
+| `VanderPolSys_real.py` | Simulates the real system (with mismatched dynamics). |
+| `VanderPolSys_naive.py` | Runs nominal MPC to predict the trajectories. |
+| `VanderPolSys_naive_lightmlp.py` | Runs nominal MPC with a lightweight learned MLP model (learn from stratch)|
+| `VanderPolSys_naive_meta.py` | Runs MPC using a meta-learned model. |
+| `VanderPolSys_Collection_Meta.py` | Collects offline data for training the meta-learned model, and data file `vdp_meta_nominal_residual.py` is under dataset|
+| `Comparsion.ipynb` | Jupyter notebook comparing performance across methods. |
+| `MetaLearning/Offline_Train_Meta.py`| Training the Meta MLP offline using the data file `vdp_meta_nominal_residual.py`|
+
+#### 📌 Example: Run nominal MPC + Meta MLP
+
+```bash
+cd VanderPol
+python VanderPolsys_naive_meta.py
+```
+
+After running the different methods and saving results in the `results/` folder, open `Comparsion.ipynb` to visualize and compare the performance.
+
+<p align="center">
+  <img src="assets/vanderpol_results.png" alt="Van der Pol Results" width="75%">
+</p>
+
+### 2. CartPole Environment
+
+We provide several scripts under `Cartpole/` to run different MPC controllers for the CartPole system using our Meta-MPC framework:
+
+| Script | Description |
+|--------|-------------|
+| `cartpole_Nominal.py` | Runs MPC with a nominal (physics-based) model. |
+| `cartpole_LightMLP.py` | Runs MPC using a learned residual MLP trained from scratch. |
+| `cartpole_MetaMLP.py` | Runs MPC using a meta-learned residual MLP with online adaptation. |
+| `cartpole_Nominal_seeds.py` | Batch test across seeds using nominal model. |
+| `cartpole_LightMLP_seeds.py` | Batch test using residual MLP (non-meta). |
+| `cartpole_MetaMLP_seeds.py` | Batch test using meta-residual MLP model. |
+| `MetaLearning/DataCollection_Meta.py` | Collects residual training data for meta-learning. The output is saved in `meta_dataset_mpc/`. |
+| `MetaLearning/Offline_Train_Meta.py` | Trains the Meta-Residual MLP model using the collected CSV dataset. |
+| `meta_dataset_mpc/cartpole_meta_residual_mpc.csv` | CSV dataset collected from `DataCollection_Meta.py` used for offline meta-learning. |
+| `Comparsion.ipynb` | Jupyter notebook to visualize and compare results across all methods. |
+
+#### 📌 Example: Run Meta-MPC with Online Adaptation
+
+```bash
+cd Cartpole
+python cartpole_MetaMLP.py
+```
+
+#### 📌 Example: Collect Residual Data for Meta-Training
+
+```bash
+python MetaLearning/DataCollection_Meta.py
+```
+
+#### 📌 Example: Train Meta Residual MLP Offline
+
+```bash
+python MetaLearning/Offline_Train_Meta.py
+```
+
+---
+
+After running all variants, results will be saved in the `results/` folder.  
+Open `Comparsion.ipynb` to visualize metrics such as RMSE, trajectory tracking, and adaptation efficiency.
 
 
 ---
