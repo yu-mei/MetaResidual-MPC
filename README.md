@@ -8,10 +8,6 @@ This is the official implementation of the paper:
 [**"Fast Online Adaptive Neural MPC via Meta-Learning"**](https://arxiv.org/abs/2504.16369)  
 by **Yu Mei**, **Xinyu Zhou**, **Shuyang Yu**, **Vaibhav Srivastava**, and **Xiaobo Tan**.
 
-<p align="center">
-  <img width="90%" src="assets/teaser.png" style="box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3); border-radius: 8px;">
-</p>
-
 ---
 
 ## 📑 Table of Contents
@@ -23,9 +19,6 @@ by **Yu Mei**, **Xinyu Zhou**, **Shuyang Yu**, **Vaibhav Srivastava**, and **Xia
   - [🚀 How to Run](#-how-to-run)
   - [📚 Project Structure](#-project-structure)
   - [📝 Citation](#-citation)
-  - [🏷️ License](#️-license)
-  - [✉️ Contact](#️-contact)
-
 ---
 
 ## 🔥 News
@@ -98,16 +91,3 @@ If you find our work useful, please consider citing:
 
 ---
 
-## 🏷️ License
-
-This project is licensed under the **MIT License**.  
-See [LICENSE](LICENSE) for more details.
-
----
-
-## ✉️ Contact
-
-For questions, feedback, or collaborations, please contact:  
-📧 [meiyu1@msu.edu](mailto:meiyu1@msu.edu)
-
----
