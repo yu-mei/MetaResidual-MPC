@@ -19,9 +19,6 @@ by **Yu Mei**, **Xinyu Zhou**, **Shuyang Yu**, **Vaibhav Srivastava**, and **Xia
     - [1. Van-der-Pol Oscillator](#1-van-der-pol-oscillator)
       - [📌 Example: Run nominal MPC + Meta MLP](#-example-run-nominal-mpc--meta-mlp)
     - [2. CartPole Environment](#2-cartpole-environment)
-      - [📌 Example: Run Meta-MPC with Online Adaptation](#-example-run-meta-mpc-with-online-adaptation)
-      - [📌 Example: Collect Residual Data for Meta-Training](#-example-collect-residual-data-for-meta-training)
-      - [📌 Example: Train Meta Residual MLP Offline](#-example-train-meta-residual-mlp-offline)
   - [📚 Project Structure](#-project-structure)
   - [📝 Citation](#-citation)
 ---
@@ -142,20 +139,20 @@ We provide several scripts under `Cartpole/` to run different MPC controllers fo
 | `meta_dataset_mpc/cartpole_meta_residual_mpc.csv` | CSV dataset collected from `DataCollection_Meta.py` used for offline meta-learning. |
 | `Comparsion.ipynb` | Jupyter notebook to visualize and compare results across all methods. |
 
-#### 📌 Example: Run Meta-MPC with Online Adaptation
+📌 Example: Run Meta-MPC with Online Adaptation
 
 ```bash
 cd Cartpole
 python cartpole_MetaMLP.py
 ```
 
-#### 📌 Example: Collect Residual Data for Meta-Training
+📌 Example: Collect Residual Data for Meta-Training
 
 ```bash
 python MetaLearning/DataCollection_Meta.py
 ```
 
-#### 📌 Example: Train Meta Residual MLP Offline
+📌 Example: Train Meta Residual MLP Offline
 
 ```bash
 python MetaLearning/Offline_Train_Meta.py
@@ -166,6 +163,15 @@ python MetaLearning/Offline_Train_Meta.py
 After running all variants, results will be saved in the `results/` folder.  
 Open `Comparsion.ipynb` to visualize metrics such as RMSE, trajectory tracking, and adaptation efficiency.
 
+<p align="center">
+  <img src="assets/CartPole_Nominal.gif" alt="Nominal MPC" width="30%" style="margin-right: 10px;">
+  <img src="assets/CartPole_MLP.gif" alt="Neural MPC + MLP" width="30%" style="margin-right: 10px;">
+  <img src="assets/CartPole_MetaMLP.gif" alt="Neural MPC + MetaMLP" width="30%">
+</p>
+
+<p align="center">
+  <em>Left: Nominal MPC &nbsp; | &nbsp; Middle: Neural MPC + Residual MLP &nbsp; | &nbsp; Right: Meta-Residual MPC</em>
+</p>
 
 ---
 
