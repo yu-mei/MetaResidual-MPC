@@ -17,8 +17,10 @@ by **Yu Mei**, **Xinyu Zhou**, **Shuyang Yu**, **Vaibhav Srivastava**, and **Xia
   - [🛠️ Installation Instructions](#️-installation-instructions)
   - [🚀 How to Run](#-how-to-run)
     - [1. Van-der-Pol Oscillator](#1-van-der-pol-oscillator)
-      - [📌 Example: Run nominal MPC + Meta MLP](#-example-run-nominal-mpc--meta-mlp)
-    - [2. CartPole Environment](#2-cartpole-environment)
+    - [2. CartPole](#2-cartpole)
+    - [3. 2D Quadrotor Stabilization and Tracking](#3-2d-quadrotor-stabilization-and-tracking)
+      - [Stabilization Results](#stabilization-results)
+      - [Tracking Results](#tracking-results)
   - [📚 Project Structure](#-project-structure)
   - [📝 Citation](#-citation)
 ---
@@ -109,7 +111,7 @@ We provide several scripts under `VanderPol/` for running different versions of 
 | `Comparsion.ipynb` | Jupyter notebook comparing performance across methods. |
 | `MetaLearning/Offline_Train_Meta.py`| Training the Meta MLP offline using the data file `vdp_meta_nominal_residual.py`|
 
-#### 📌 Example: Run nominal MPC + Meta MLP
+📌 Example: Run nominal MPC + Meta MLP
 
 ```bash
 cd VanderPol
@@ -122,7 +124,7 @@ After running the different methods and saving results in the `results/` folder,
   <img src="assets/vanderpol_results.png" alt="Van der Pol Results" width="75%">
 </p>
 
-### 2. CartPole Environment
+### 2. CartPole
 
 We provide several scripts under `Cartpole/` to run different MPC controllers for the CartPole system using our Meta-MPC framework:
 
@@ -170,7 +172,56 @@ Open `Comparsion.ipynb` to visualize metrics such as RMSE, trajectory tracking, 
 </p>
 
 <p align="center">
-  <em>Left: Nominal MPC &nbsp; | &nbsp; Middle: Neural MPC + Residual MLP &nbsp; | &nbsp; Right: Meta-Residual MPC</em>
+  <em>Left: Nominal MPC &nbsp; | &nbsp; Middle: Neural MPC + Residual MLP &nbsp; | &nbsp; Right: Neural MPC + Residual Meta-MLP</em>
+</p>
+
+### 3. 2D Quadrotor Stabilization and Tracking
+
+We provide two folders for 2D Quadrotor control tasks using our Meta-MPC framework:
+
+- `Quadrotor_2D_Stabilization/`: for stabilization tasks
+- `Quadrotor_2D_Tracking/`: for reference trajectory tracking
+
+Each folder contains scripts to run, which is similar as CartPole system:
+
+📌 Example: Run Meta-MPC for Stabilization
+
+```bash
+cd Quadrotor_2D_Stabilization
+python quadrotor2D_Meta.py
+```
+
+📌 Example: Run Meta-MPC for Tracking
+
+```bash
+cd Quadrotor_2D_Tracking
+python quadrotor2D_Meta.py
+```
+
+#### Stabilization Results
+
+<p align="center">
+  <img src="assets/Quadrotor_stabilization_Nominal.gif" alt="Nominal MPC" width="32%" style="margin-right: 8px;">
+  <img src="assets/Quadrotor_stabilization_MLP.gif" alt="MLP Residual MPC" width="32%" style="margin-right: 8px;">
+  <img src="assets/Quadrotor_stabilization_MetaMLP.gif" alt="Meta-Residual MPC" width="32%">
+</p>
+
+<p align="center">
+  <em>Left: Nominal MPC &nbsp; | &nbsp; Middle: MPC + Residual MLP &nbsp; | &nbsp; Right: Neural MPC + Residual Meta-MLP</em>
+</p>
+
+---
+
+#### Tracking Results
+
+<p align="center">
+  <img src="assets/Quadrotor_tracking_Nominal.gif" alt="Nominal MPC" width="32%" style="margin-right: 8px;">
+  <img src="assets/Quadrotor_tracking_MLP.gif" alt="MLP Residual MPC" width="32%" style="margin-right: 8px;">
+  <img src="assets/Quadrotor_tracking_MetaMLP.gif" alt="Meta-Residual MPC" width="32%">
+</p>
+
+<p align="center">
+  <em>Left: Nominal MPC &nbsp; | &nbsp; Middle: MPC + Residual MLP &nbsp; | &nbsp; Right: Right: Neural MPC + Residual Meta-MLP</em>
 </p>
 
 ---
@@ -179,12 +230,13 @@ Open `Comparsion.ipynb` to visualize metrics such as RMSE, trajectory tracking, 
 
 ```
 MetaResidual-MPC/
+├── assets/                      # Demo GIFs and figures used in README (e.g., CartPole_MetaMLP.gif, Quadrotor_*.gif)
 ├── Cartpole/                    # Code for CartPole experiments
-├── Quadrotor_2D_Stabilization/   # Code for 2D Quadrotor stabilization tasks
-├── Quadrotor_2D_Tracking/        # Code for 2D Quadrotor trajectory tracking tasks
-├── VanderPol/                    # Code for Van der Pol oscillator experiments
-├── environment.yml               # Conda environment file
-└── README.md                     # Project documentation
+├── Quadrotor_2D_Stabilization/  # Code for 2D Quadrotor stabilization tasks
+├── Quadrotor_2D_Tracking/       # Code for 2D Quadrotor trajectory tracking tasks
+├── VanderPol/                   # Code for Van der Pol oscillator experiments
+├── environment.yml              # Conda environment file
+└── README.md                    # Project documentation
 ```
 
 ---
