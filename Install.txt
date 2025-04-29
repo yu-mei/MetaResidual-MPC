@@ -1,5 +1,0 @@
-1. conda env create -f environment.yml
-2. pip install l4casadi --no-build-isolation
-3. acados python interface: https://docs.acados.org/python_interface/index.html 
-4. safe-control-gym
-5. torch 2.5.1: conda install pytorch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 pytorch-cuda=12.4 -c pytorch -c nvidia

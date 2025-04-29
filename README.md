@@ -41,23 +41,68 @@ Watch our [**YouTube video**](https://www.youtube.com/watch?v=4K2QeBxWcWA) showc
 
 ## 🛠️ Installation Instructions
 
-🚧 **TODO: Full installation instructions will be provided soon.**
+1. **Clone the repository**
 
-For now, basic steps include:
+   ```bash
+   git clone https://github.com/yu-mei/MetaResidual-MPC.git
+   cd MetaResidual-MPC
+   ```
 
-- Clone the repository:
+2. **Create a conda environment**
 
-  ```bash
-  git clone https://github.com/yu-mei/MetaResidual-MPC.git
-  cd MetaResidual-MPC
-  ```
+   ```bash
+   conda env create -f environment.yml
+   conda activate l4control
+   ```
 
+3. **Install `l4casadi`**
+
+   Install the latest version using pip with no-build-isolation (I used GPU(CUDA) in my case):
+
+   ```bash
+   pip install l4casadi --no-build-isolation
+   ```
+
+   > 🔗 Source: [github.com/Tim-Salzmann/l4casadi](https://github.com/Tim-Salzmann/l4casadi) 
+   
+4. **Install `acados` and the `acados` Python interface**
+
+   4.1 **Clone and build Acados**
+
+   Follow the [official Acados installation guide](https://docs.acados.org/installation/index.html):
+
+   4.2 **Install the Acados Python interface**
+
+   Follow the [Python interface installation guide](https://docs.acados.org/python_interface/index.html):
+
+   4.3 **Set the `ACADOS_INSTALL_DIR` environment variable**
+
+   After installation, set the environment variable to point to your Acados directory.
+
+5. **Install safe-control-gym**
+   Follow the [official safe-control-gym installation guide](https://github.com/utiasDSL/safe-control-gym)
+
+6. **Install PyTorch (Override)**
+
+   Due to version conflicts between `l4casadi` and `safe-control-gym`, it is necessary to override the PyTorch installation.
+
+   Install PyTorch 2.5.1 with CUDA 12.4 support:
+
+   ```bash
+   conda install pytorch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 pytorch-cuda=12.4 -c pytorch -c nvidia
+   ```
+
+   > ⚠️ This step ensures compatibility with both `l4casadi` and `safe-control-gym`.  
+   > Make sure your system's CUDA drivers are compatible with CUDA 12.4.
+
+7. **Fix Installation**
+    If you encounter any remaining installation errors, please manually install the missing or incompatible packages.  
+   Note that the exact package versions may vary depending on your system environment.
 
 ---
 
 ## 🚀 How to Run
 
-🚧 **TODO: Full installation instructions will be provided soon.**
 
 ---
 
@@ -70,7 +115,6 @@ MetaResidual-MPC/
 ├── Quadrotor_2D_Tracking/        # Code for 2D Quadrotor trajectory tracking tasks
 ├── VanderPol/                    # Code for Van der Pol oscillator experiments
 ├── environment.yml               # Conda environment file
-├── Install.txt                   # Installation instructions (work in progress)
 └── README.md                     # Project documentation
 ```
 
