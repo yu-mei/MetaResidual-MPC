@@ -124,6 +124,8 @@ After running the different methods and saving results in the `results/` folder,
   <img src="assets/vanderpol_results.png" alt="Van der Pol Results" width="75%">
 </p>
 
+---
+
 ### 2. CartPole
 
 We provide several scripts under `Cartpole/` to run different MPC controllers for the CartPole system using our Meta-MPC framework:
@@ -159,9 +161,7 @@ python MetaLearning/DataCollection_Meta.py
 ```bash
 python MetaLearning/Offline_Train_Meta.py
 ```
-
 ---
-
 After running all variants, results will be saved in the `results/` folder.  
 Open `Comparsion.ipynb` to visualize metrics such as RMSE, trajectory tracking, and adaptation efficiency.
 
@@ -174,6 +174,8 @@ Open `Comparsion.ipynb` to visualize metrics such as RMSE, trajectory tracking, 
 <p align="center">
   <em>Left: Nominal MPC &nbsp; | &nbsp; Middle: Neural MPC + Residual MLP &nbsp; | &nbsp; Right: Neural MPC + Residual Meta-MLP</em>
 </p>
+
+---
 
 ### 3. 2D Quadrotor Stabilization and Tracking
 
@@ -197,6 +199,7 @@ python quadrotor2D_Meta.py
 cd Quadrotor_2D_Tracking
 python quadrotor2D_Meta.py
 ```
+---
 
 #### Stabilization Results
 
