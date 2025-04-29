@@ -161,7 +161,7 @@ python MetaLearning/DataCollection_Meta.py
 ```bash
 python MetaLearning/Offline_Train_Meta.py
 ```
----
+
 After running all variants, results will be saved in the `results/` folder.  
 Open `Comparsion.ipynb` to visualize metrics such as RMSE, trajectory tracking, and adaptation efficiency.
 
@@ -199,7 +199,6 @@ python quadrotor2D_Meta.py
 cd Quadrotor_2D_Tracking
 python quadrotor2D_Meta.py
 ```
----
 
 #### Stabilization Results
 
