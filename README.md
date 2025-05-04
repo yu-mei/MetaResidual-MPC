@@ -223,7 +223,7 @@ python quadrotor2D_Meta.py
 </p>
 
 <p align="center">
-  <em>Left: Nominal MPC &nbsp; | &nbsp; Middle: MPC + Residual MLP &nbsp; | &nbsp; Right: Right: Neural MPC + Residual Meta-MLP</em>
+  <em>Left: Nominal MPC &nbsp; | &nbsp; Middle: MPC + Residual MLP &nbsp; | &nbsp; Right: Neural MPC + Residual Meta-MLP</em>
 </p>
 
 ---
