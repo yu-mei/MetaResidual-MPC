@@ -15,6 +15,8 @@ by **Yu Mei**, **Xinyu Zhou**, **Shuyang Yu**, **Vaibhav Srivastava**, and **Xia
   - [📑 Table of Contents](#-table-of-contents)
   - [🎥 Demonstration Video](#-demonstration-video)
   - [🛠️ Installation Instructions](#️-installation-instructions)
+    - [Option A: CUDA 12.x GPUs (e.g., RTX A2000)](#option-a-cuda-12x-gpus-eg-rtx-a2000)
+    - [Option B: Blackwell GPUs (CUDA 13.x, e.g., RTX 5070)](#option-b-blackwell-gpus-cuda-13x-eg-rtx-5070)
   - [🚀 How to Run](#-how-to-run)
     - [1. Van-der-Pol Oscillator](#1-van-der-pol-oscillator)
     - [2. CartPole](#2-cartpole)
@@ -39,21 +41,32 @@ Watch our [**YouTube video**](https://www.youtube.com/watch?v=4K2QeBxWcWA) showc
 
 ## 🛠️ Installation Instructions
 
-**1. Clone the repository**
+**1. Clone the repository** *(common to both tracks)*
 
    ```bash
    git clone https://github.com/yu-mei/MetaResidual-MPC.git
    cd MetaResidual-MPC
    ```
 
-**2. Create a conda environment**
+**2. Pick the track that matches your GPU**, then follow **one** of the two options below:
+
+   | Your GPU | Track |
+   |----------|-------|
+   | Pre-Blackwell cards — RTX 20/30/40 series, A-series (e.g., **RTX A2000**) | [Option A](#option-a-cuda-12x-gpus-eg-rtx-a2000) |
+   | Blackwell cards — RTX 50 series (e.g., **RTX 5070**), compute capability `sm_120` | [Option B](#option-b-blackwell-gpus-cuda-13x-eg-rtx-5070) |
+
+---
+
+### Option A: CUDA 12.x GPUs (e.g., RTX A2000)
+
+**A1. Create a conda environment**
 
    ```bash
    conda env create -f environment.yml
    conda activate l4control
    ```
 
-**3. Install `l4casadi`**
+**A2. Install `l4casadi`**
 
    Install the latest version using pip with `--no-build-isolation` (GPU/CUDA supported):
 
@@ -63,21 +76,21 @@ Watch our [**YouTube video**](https://www.youtube.com/watch?v=4K2QeBxWcWA) showc
 
    > 🔗 Source: [github.com/Tim-Salzmann/l4casadi](https://github.com/Tim-Salzmann/l4casadi)
 
-**4. Install acados and the acados Python interface**
+**A3. Install acados and the acados Python interface**
 
-   4.1 Clone and build Acados
+   A3.1 Clone and build Acados
 
    Follow the [official Acados installation guide](https://docs.acados.org/installation/index.html).
 
-   4.2 Install the Acados Python interface
+   A3.2 Install the Acados Python interface
 
    Follow the [Python interface installation guide](https://docs.acados.org/python_interface/index.html).
 
-**5. Install `safe-control-gym`**
+**A4. Install `safe-control-gym`**
 
    Follow the [official safe-control-gym installation guide](https://github.com/utiasDSL/safe-control-gym).
 
-**6. Override PyTorch installation**
+**A5. Override PyTorch installation**
 
    Due to version conflicts between `l4casadi` and `safe-control-gym`, it is necessary to override PyTorch:
 
@@ -88,10 +101,107 @@ Watch our [**YouTube video**](https://www.youtube.com/watch?v=4K2QeBxWcWA) showc
    > ⚠️ This ensures compatibility with both `l4casadi` and `safe-control-gym`.  
    > 🔧 Make sure your CUDA drivers are compatible with CUDA 12.4.
 
-**7. Fix installation issues (if any)**
+**A6. Fix installation issues (if any)**
 
    If you encounter any remaining errors, manually install the missing or incompatible packages.  
    Package versions may vary depending on your system environment.
+
+---
+
+### Option B: Blackwell GPUs (CUDA 13.x, e.g., RTX 5070)
+
+> ⚠️ **Why a separate track?** Blackwell cards (RTX 50 series) have compute capability `sm_120`, which PyTorch only supports from **2.7+** with **CUDA ≥ 12.8** builds. The Option A install (`pytorch==2.5.1 + pytorch-cuda=12.4`) imports fine but fails at the first GPU op with `CUDA capability sm_120 is not compatible with the current PyTorch installation`. In addition, the `-c pytorch` conda channel no longer publishes new versions, so PyTorch is installed via pip wheels here, and `l4casadi` moves to the **last** step so that it compiles against the final PyTorch.
+
+> 💡 The `CUDA Version: 13.x` shown by `nvidia-smi` is the *driver's* maximum supported runtime, not an installed toolkit. The pip wheels bundle their own CUDA runtime, so no system CUDA toolkit is required for PyTorch.
+
+**B1. Clean the environment file**
+
+   If present, remove the stale CUDA-11-era pins exported from older machines (a `.bak` backup is kept; the command is harmless if the lines are absent):
+
+   ```bash
+   sed -i.bak \
+     -e '/nvidia-cublas-cu11/d' \
+     -e '/nvidia-cuda-nvrtc-cu11/d' \
+     -e '/nvidia-cuda-runtime-cu11/d' \
+     -e '/nvidia-cudnn-cu11/d' \
+     -e '/triton==3.1.0/d' \
+     environment.yml
+   ```
+
+   > 💡 PyTorch will later bring its own matching `triton` and `nvidia-*` runtime wheels.
+
+**B2. Create a conda environment**
+
+   ```bash
+   conda env create -f environment.yml
+   conda activate l4control
+   ```
+
+**B3. Install acados and the acados Python interface** *(same as A3 — unchanged)*
+
+   The acados C library is CPU-only and unaffected by the GPU swap.
+
+   B3.1 Clone and build Acados
+
+   Follow the [official Acados installation guide](https://docs.acados.org/installation/index.html).
+
+   B3.2 Install the Acados Python interface
+
+   Follow the [Python interface installation guide](https://docs.acados.org/python_interface/index.html).
+
+**B4. Install `safe-control-gym`** *(same as A4)*
+
+   Follow the [official safe-control-gym installation guide](https://github.com/utiasDSL/safe-control-gym).
+
+   > 💡 Whatever PyTorch version it pulls in will be replaced in the next step — ignore it for now.
+
+**B5. Install PyTorch (Blackwell build)** *(replaces A5 — do **not** run the old conda command)*
+
+   ```bash
+   pip uninstall -y torch torchvision torchaudio triton
+   pip install "torch==2.9.*" "torchvision==0.24.*" "torchaudio==2.9.*" \
+       --index-url https://download.pytorch.org/whl/cu130 --no-cache-dir
+   ```
+
+   > 💡 torch ≥ 2.7 is the hard minimum for `sm_120`; the 2.9 series is the first with CUDA 13.0 wheels, still supports Python 3.10, and is a modest API jump from 2.5.1.
+
+   Conservative fallback if the code misbehaves under 2.9 (cu128 wheels remain hosted and run fine on 13.x drivers):
+
+   ```bash
+   pip install torch==2.7.1 torchvision==0.22.1 torchaudio==2.7.1 \
+       --index-url https://download.pytorch.org/whl/cu128 --no-cache-dir
+   ```
+
+**B6. Install `l4casadi` — last, after PyTorch** *(moved from A2)*
+
+   ```bash
+   pip install l4casadi --no-build-isolation --no-cache-dir
+   ```
+
+   > ⚠️ Order matters: `--no-build-isolation` makes `l4casadi` compile and link against the *currently installed* PyTorch, so it must come **after** B5. If you ever change the torch version later, force a rebuild:
+   > `pip install l4casadi --no-build-isolation --force-reinstall --no-cache-dir`  
+   > 🔧 Requires GCC ≥ 10. If the GPU build is not detected automatically and a system toolkit exists: `CUDACXX=/usr/local/cuda/bin/nvcc pip install l4casadi --no-build-isolation`.  
+   > 🔗 Source: [github.com/Tim-Salzmann/l4casadi](https://github.com/Tim-Salzmann/l4casadi)
+
+**B7. Verify the GPU stack**
+
+   ```python
+   import torch
+   print(torch.__version__, torch.version.cuda)   # e.g. 2.9.x  13.0
+   print(torch.cuda.get_device_name(0))           # NVIDIA GeForce RTX 5070
+   print(torch.cuda.get_device_capability(0))     # (12, 0)
+   x = torch.randn(1024, 1024, device="cuda")
+   print((x @ x).sum())                           # real kernel launch = the actual test
+   ```
+
+   > ⚠️ `torch.cuda.is_available()` only checks the driver — always run the matmul line. If you see `sm_120 is not compatible` or `no kernel image is available`, a pre-cu128 or CPU wheel sneaked in: redo B5 (uninstall first, keep `--no-cache-dir` and the explicit `--index-url`).
+
+**B8. Fix installation issues (if any)**
+
+   If you encounter any remaining errors, manually install the missing or incompatible packages.  
+   Package versions may vary depending on your system environment.
+
+   > 💡 If you reinstall `safe-control-gym` later, use `pip install -e . --no-deps` so it does not downgrade PyTorch.
 
 ---
 
@@ -261,4 +371,3 @@ If you find our work useful, please consider citing:
 ```
 
 ---
-
