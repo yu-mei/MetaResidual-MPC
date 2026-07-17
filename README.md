@@ -114,48 +114,32 @@ Watch our [**YouTube video**](https://www.youtube.com/watch?v=4K2QeBxWcWA) showc
 
 > 💡 The `CUDA Version: 13.x` shown by `nvidia-smi` is the *driver's* maximum supported runtime, not an installed toolkit. The pip wheels bundle their own CUDA runtime, so no system CUDA toolkit is required for PyTorch.
 
-**B1. Clean the environment file**
-
-   If present, remove the stale CUDA-11-era pins exported from older machines (a `.bak` backup is kept; the command is harmless if the lines are absent):
-
-   ```bash
-   sed -i.bak \
-     -e '/nvidia-cublas-cu11/d' \
-     -e '/nvidia-cuda-nvrtc-cu11/d' \
-     -e '/nvidia-cuda-runtime-cu11/d' \
-     -e '/nvidia-cudnn-cu11/d' \
-     -e '/triton==3.1.0/d' \
-     environment.yml
-   ```
-
-   > 💡 PyTorch will later bring its own matching `triton` and `nvidia-*` runtime wheels.
-
-**B2. Create a conda environment**
+**B1. Create a conda environment**
 
    ```bash
    conda env create -f environment.yml
    conda activate l4control
    ```
 
-**B3. Install acados and the acados Python interface** *(same as A3 — unchanged)*
+**B2. Install acados and the acados Python interface** *(same as A3 — unchanged)*
 
    The acados C library is CPU-only and unaffected by the GPU swap.
 
-   B3.1 Clone and build Acados
+   B2.1 Clone and build Acados
 
    Follow the [official Acados installation guide](https://docs.acados.org/installation/index.html).
 
-   B3.2 Install the Acados Python interface
+   B2.2 Install the Acados Python interface
 
    Follow the [Python interface installation guide](https://docs.acados.org/python_interface/index.html).
 
-**B4. Install `safe-control-gym`** *(same as A4)*
+**B3. Install `safe-control-gym`** *(same as A4)*
 
    Follow the [official safe-control-gym installation guide](https://github.com/utiasDSL/safe-control-gym).
 
    > 💡 Whatever PyTorch version it pulls in will be replaced in the next step — ignore it for now.
 
-**B5. Install PyTorch (Blackwell build)** *(replaces A5 — do **not** run the old conda command)*
+**B4. Install PyTorch (Blackwell build)** *(replaces A5 — do **not** run the old conda command)*
 
    ```bash
    pip uninstall -y torch torchvision torchaudio triton
@@ -172,18 +156,18 @@ Watch our [**YouTube video**](https://www.youtube.com/watch?v=4K2QeBxWcWA) showc
        --index-url https://download.pytorch.org/whl/cu128 --no-cache-dir
    ```
 
-**B6. Install `l4casadi` — last, after PyTorch** *(moved from A2)*
+**B5. Install `l4casadi` — last, after PyTorch** *(moved from A2)*
 
    ```bash
    pip install l4casadi --no-build-isolation --no-cache-dir
    ```
 
-   > ⚠️ Order matters: `--no-build-isolation` makes `l4casadi` compile and link against the *currently installed* PyTorch, so it must come **after** B5. If you ever change the torch version later, force a rebuild:
+   > ⚠️ Order matters: `--no-build-isolation` makes `l4casadi` compile and link against the *currently installed* PyTorch, so it must come **after** B4. If you ever change the torch version later, force a rebuild:
    > `pip install l4casadi --no-build-isolation --force-reinstall --no-cache-dir`  
    > 🔧 Requires GCC ≥ 10. If the GPU build is not detected automatically and a system toolkit exists: `CUDACXX=/usr/local/cuda/bin/nvcc pip install l4casadi --no-build-isolation`.  
    > 🔗 Source: [github.com/Tim-Salzmann/l4casadi](https://github.com/Tim-Salzmann/l4casadi)
 
-**B7. Verify the GPU stack**
+**B6. Verify the GPU stack**
 
    ```python
    import torch
@@ -194,14 +178,15 @@ Watch our [**YouTube video**](https://www.youtube.com/watch?v=4K2QeBxWcWA) showc
    print((x @ x).sum())                           # real kernel launch = the actual test
    ```
 
-   > ⚠️ `torch.cuda.is_available()` only checks the driver — always run the matmul line. If you see `sm_120 is not compatible` or `no kernel image is available`, a pre-cu128 or CPU wheel sneaked in: redo B5 (uninstall first, keep `--no-cache-dir` and the explicit `--index-url`).
+   > ⚠️ `torch.cuda.is_available()` only checks the driver — always run the matmul line. If you see `sm_120 is not compatible` or `no kernel image is available`, a pre-cu128 or CPU wheel sneaked in: redo B4 (uninstall first, keep `--no-cache-dir` and the explicit `--index-url`).
 
-**B8. Fix installation issues (if any)**
+**B7. Fix installation issues (if any)**
 
    If you encounter any remaining errors, manually install the missing or incompatible packages.  
    Package versions may vary depending on your system environment.
 
-   > 💡 If you reinstall `safe-control-gym` later, use `pip install -e . --no-deps` so it does not downgrade PyTorch.
+   > 💡 If you reinstall `safe-control-gym` later, use `pip install -e . --no-deps` so it does not downgrade PyTorch.  
+   > 💡 If your local copy of `environment.yml` predates the repo cleanup and still lists `nvidia-*-cu11` or `triton==3.1.0` under `pip:`, delete those lines (or `pip uninstall` the packages) — they are leftovers from an old CUDA 11-era PyTorch and conflict with the Blackwell wheels.
 
 ---
 
