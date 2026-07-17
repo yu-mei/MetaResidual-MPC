@@ -156,6 +156,8 @@ Watch our [**YouTube video**](https://www.youtube.com/watch?v=4K2QeBxWcWA) showc
        --index-url https://download.pytorch.org/whl/cu128 --no-cache-dir
    ```
 
+   > 🔗 Source: [pytorch.org/get-started/locally](https://pytorch.org/get-started/locally/) · pinned versions: [pytorch.org/get-started/previous-versions](https://pytorch.org/get-started/previous-versions/)
+
 **B5. Install `l4casadi` — last, after PyTorch** *(moved from A2)*
 
    ```bash
